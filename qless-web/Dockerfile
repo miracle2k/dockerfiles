@@ -36,7 +36,7 @@ EXPOSE 5678
 
 # Giving the redis url to qless-web can be done via an environment variable
 # (alternative: --url-file option). We need to have a runner script for this.
-ADD run /start
+ADD run /qless-web
 
 
-CMD ["/start"]
+CMD ["/qless-web"]
