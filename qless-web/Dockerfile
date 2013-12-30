@@ -3,8 +3,14 @@ FROM ubuntu:12.04
 RUN apt-get update
 RUN apt-get -y upgrade
 
+# We'll be needing to compile native Ruby extensions (thin/EventMachine).
+# Put it up here for re-use.
+RUN apt-get -y install build-essential
+
 # Install ruby and rubygems
 RUN apt-get -y install rubygems1.9.1
+# Again, ruby dev libs required to build EventMachine.
+RUN apt-get -y install ruby1.9.1-dev
 
 # We need the git version of qless, since the released one is old and broken.
 # Installing from git on the server is a mess, so I simply prebuilt the gem,
@@ -19,8 +25,8 @@ RUN gem install --no-ri --no-rdoc /tmp/qless-0.10.0.pre.gem
 RUN gem install --no-ri --no-rdoc sinatra -v "~>1.3.2"
 RUN gem install --no-ri --no-rdoc vegas -v "~>0.1.1"
 
-# Installing thin requires EventMachine requires compiling native stuff
-RUN apt-get -y install build-essential ruby1.9.1-dev
+# I'm guessing this may be legitimately not included in the gem.
+# It's probably like gunicorn.
 RUN gem install thin --no-ri --no-rdoc
 
 
