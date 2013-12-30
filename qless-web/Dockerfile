@@ -20,7 +20,7 @@ RUN gem install --no-ri --no-rdoc sinatra -v "~>1.3.2"
 RUN gem install --no-ri --no-rdoc vegas -v "~>0.1.1"
 
 # Installing thin requires EventMachine requires compiling native stuff
-RUN apt-get install build-essential ruby1.9.1-dev
+RUN apt-get -y install build-essential ruby1.9.1-dev
 RUN gem install thin--no-ri --no-rdoc
 
 
