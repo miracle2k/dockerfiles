@@ -12,7 +12,7 @@ RUN apt-get -y install rubygems
 # using version 038a438f73d7af2c82541cdc0b1c5d12879a7bad and the command:
 # "gem build qlss.gemspec".
 ADD qless-0.10.0.pre.gem /tmp/qless-0.10.0.pre.gem
-gem install /tmp/qless-0.10.0.pre.gem
+RUN gem install --no-ri --no-rdoc /tmp/qless-0.10.0.pre.gem
 
 
 # HTTP
@@ -21,7 +21,7 @@ EXPOSE 5678
 
 # Giving the redis url to qless-web can be done via an environment variable
 # (alternative: --url-file option). We need to have a runner script for this.
-ADD run /run
+ADD run /start
 
 
-CMD ["/run"]
+CMD ["/start"]
