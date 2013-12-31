@@ -12,3 +12,9 @@ SSL_KEY
 SSL_CERT
     Like SSL_KEY, will be saved in the location defined by
     server.https.cert.
+
+If SSL_KEY or SSL_CERT are not defined, the ssl section will be removed
+from the config, so hipache can run without errors.
+
+The redis data directory is in "/var/lib/redis", so you can bind mount
+it to persist the data.

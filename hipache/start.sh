@@ -18,5 +18,10 @@ if [ -n "$SSL_CERT" ]; then
     echo "$SSL_CERT" > file
 fi
 
+if [ -z "$SSL_KEY" ]; then
+    echo "Removing server.https section, SSL_KEY not defined"
+    cat $config | json -e "server.https=undefined" > $config
+fi
+
 # Start services as the base image does.
 supervisord -n
