@@ -5,6 +5,8 @@ sed -i "s/^daemonize yes/daemonize no/g" /etc/redis/redis.conf
 # Look for more consistancy. Since this is a mostly-read database,
 # I don't expect a big performance impact.
 sed -i "s/^appendonly no/appendonly yes/g" /etc/redis/redis.conf
+# Be sure to bind on all interfaces
+sed -i "s/^bind 127.0.0.1/bind 0.0.0.0/g" /etc/redis/redis.conf
 
 # Merge configuration via environment variable into default.
 config="/usr/local/lib/node_modules/hipache/config/config_generated.json"
