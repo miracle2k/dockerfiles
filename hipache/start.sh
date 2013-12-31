@@ -1,8 +1,7 @@
 #!/bin/sh
 
 # Merge configuration via environment variable into default.
-# config_dev is what the base image uses, so we'll just overwrite that.
-config="/usr/local/lib/node_modules/hipache/config/config_dev.json"
+config="/usr/local/lib/node_modules/hipache/config/config_generated.json"
 echo $HIPACHE_CONFIG | cat /usr/local/lib/node_modules/hipache/config/config.json - | json --merge > $config
 
 if [ -n "$SSL_KEY" ]; then
