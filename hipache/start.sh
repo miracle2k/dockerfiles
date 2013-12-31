@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# Fix up redis configuration file
+sed -i "s/^daemonize yes/daemonize no/g" /etc/redis/redis.conf
+# Look for more consistancy. Since this is a mostly-read database,
+# I don't expect a big performance impact.
+sed -i "s/^appendonly no/appendonly yes/g" /etc/redis/redis.conf
+
 # Merge configuration via environment variable into default.
 config="/usr/local/lib/node_modules/hipache/config/config_generated.json"
 echo $HIPACHE_CONFIG | cat /usr/local/lib/node_modules/hipache/config/config.json - | json --merge > $config
@@ -20,7 +26,8 @@ fi
 
 if [ -z "$SSL_KEY" ]; then
     echo "Removing server.https section, SSL_KEY not defined"
-    cat $config | json -e "server.https=undefined" > $config
+    cfgcnt=$(cat $config)
+    echo $cfgcnt | json -e "server.https=undefined" > $config
 fi
 
 # Start services as the base image does.
