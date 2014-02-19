@@ -1,0 +1,24 @@
+#!/bin/sh
+
+cp /etc/nginx/sites-available/httpapi_proxy.conf.template /etc/nginx/sites-enabled/httpapi_proxy.conf
+if [ -z "$SECRET_PATH" ]; then
+    echo "No SECRET_PATH set, using default."
+    SECRET_PATH="/"
+fi
+sed -i "s@{{SECRET_PATH}}@$SECRET_PATH@g" /etc/nginx/sites-enabled/httpapi_proxy.conf
+
+if [ -n "$SSL_KEY" ]; then
+    file="/etc/nginx/certificates/server.key"
+    echo "Writing SSL_KEY to $file"
+    mkdir -p "$(dirname $file)"
+    echo "$SSL_KEY" > $file
+fi
+
+if [ -n "$SSL_CERT" ]; then
+    file="/etc/nginx/certificates/server.crt"
+    echo "Writing SSL_CERT to $file"
+    mkdir -p "$(dirname $file)"
+    echo "$SSL_CERT" > $file
+fi
+
+exec nginx
