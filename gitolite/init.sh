@@ -65,4 +65,5 @@ else
     su git -c "bin/gitolite setup"
 fi
 
+echo "Executing $*"
 exec $*
