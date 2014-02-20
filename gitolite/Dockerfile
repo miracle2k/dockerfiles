@@ -14,7 +14,7 @@ RUN dpkg-reconfigure locales
 # To avoid annoying "perl: warning: Setting locale failed." errors,
 # do not allow the client to pass custom locals, see:
 # http://stackoverflow.com/a/2510548/15677
-RUN sed -i 's/^AcceptEnv LANG LC_\*$/foobar/g' /etc/ssh/sshd_config
+RUN sed -i 's/^AcceptEnv LANG LC_\*$//g' /etc/ssh/sshd_config
 
 RUN mkdir /var/run/sshd
 
