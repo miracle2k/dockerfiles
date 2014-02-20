@@ -2,10 +2,13 @@
 
 Runs an SSH server, serving gitolite as the git@ user.
 
-On first start, can run "gitolite setup" with a starting ssh key you provided.
+On the first start, it will run "gitolite setup" with a starting ssh key
+you provided, or you can bootstrap with an existing gitolite-admin repository.
 
 On subsequent starts, will run "gitolite setup" everytime to integrate any
 outside changes.
+
+The git user will have a ssh key generated for itself, for mirroring setups.
 
 ### Examples
 

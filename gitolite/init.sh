@@ -2,6 +2,12 @@
 
 cd /home/git
 
+# Always make sure the git user has a private key you may
+# use for mirroring setups etc.
+if [ ! -f ./.ssh/id_rsa ]; then
+   su git -c "ssh-keygen -f /home/git/.ssh/id_rsa  -t rsa -N ''"
+fi
+
 if [ ! -d ./.gitolite ] ; then
    # if there is an existing repositories/ folder, it must
    # have been bind-mounted; we need to make sure it has the
