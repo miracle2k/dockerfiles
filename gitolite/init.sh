@@ -45,14 +45,10 @@ if [ ! -d ./.gitolite ] ; then
        sed -i "s/GIT_CONFIG_KEYS.*=>.*''/GIT_CONFIG_KEYS => \"${GIT_CONFIG_KEYS}\"/g" /home/git/.gitolite.rc
 
        # We will need to update authorized_keys based on
-       # the gitolite-admin repo. It appears there is no
-       # easier way to do this than simulate what the 
-       # post-update hook does (copying the keydir and 
-       # conf folders from the repo to the .gitolite folder),
-       # and then subsequently running the POST_COMPILE
-       # trigger (see Gitolite/Hooks/PostUpdate.pm).
-       su git -c "GIT_WORK_TREE=/home/git/.gitolite GIT_DIR=/home/git/repositories/gitolite-admin.git/ git checkout -f --quiet master"
-       su git -c "bin/gitolite compile && bin/gitolite setup --hooks-only && bin/gitolite trigger POST_COMPILE"
+       # the gitolite-admin repo. The way to do this is by
+       # triggering the post-update hook of the gitolite-admin
+       # repo (thanks to sitaram for the solution):
+       su git -c "cd /home/git/repositories/gitolite-admin.git && GL_LIBDIR=$(/home/git/bin/gitolite query-rc GL_LIBDIR) PATH=$PATH:/home/git/bin hooks/post-update refs/heads/master"
    fi
 else
     # Resync on every restart
