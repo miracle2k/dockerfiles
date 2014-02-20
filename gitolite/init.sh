@@ -42,7 +42,11 @@ if [ ! -d ./.gitolite ] ; then
 
        # Apply config customizations. We need to do this now,
        # because w/o the right config, the compile may fail.
-       sed -i "s/GIT_CONFIG_KEYS.*=>.*''/GIT_CONFIG_KEYS => \"${GIT_CONFIG_KEYS}\"/g" /home/git/.gitolite.rc
+       rcfile=/home/git/.gitolite.rc
+       sed -i "s/GIT_CONFIG_KEYS.*=>.*''/GIT_CONFIG_KEYS => \"${GIT_CONFIG_KEYS}\"/g" $rcfile
+       if [ -n "$LOCAL_CODE" ]; then
+           sed -i "s/# LOCAL_CODE.*=>.*$/LOCAL_CODE => \"${LOCAL_CODE}\",/" $rcfile
+       fi
 
        # We will need to update authorized_keys based on
        # the gitolite-admin repo. The way to do this is by
