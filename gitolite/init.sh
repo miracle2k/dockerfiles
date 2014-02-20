@@ -45,7 +45,7 @@ if [ ! -d ./.gitolite ] ; then
        rcfile=/home/git/.gitolite.rc
        sed -i "s/GIT_CONFIG_KEYS.*=>.*''/GIT_CONFIG_KEYS => \"${GIT_CONFIG_KEYS}\"/g" $rcfile
        if [ -n "$LOCAL_CODE" ]; then
-           sed -i "s/# LOCAL_CODE.*=>.*$/LOCAL_CODE => \"${LOCAL_CODE}\",/" $rcfile
+           sed -i "s|# LOCAL_CODE.*=>.*$|LOCAL_CODE => \"${LOCAL_CODE}\",|" $rcfile
        fi
 
        # We will need to update authorized_keys based on
