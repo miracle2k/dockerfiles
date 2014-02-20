@@ -6,6 +6,8 @@ cd /home/git
 # use for mirroring setups etc.
 if [ ! -f ./.ssh/id_rsa ]; then
    su git -c "ssh-keygen -f /home/git/.ssh/id_rsa  -t rsa -N ''"
+   echo "Here is your private key:"
+   cat /home/git/.ssh/id_rsa.pub
 fi
 
 # Support trusting hosts for mirroring setups.
