@@ -34,18 +34,18 @@ if [ ! -d ./.gitolite ] ; then
        rm /tmp/admin.pub
    else
        # If no SSH key is given, we instead try to support
-       # bootstrapping from an existing gitolite-admin. 
+       # bootstrapping from an existing gitolite-admin.
 
-       # Unfortunately, gitolite setup will add a new 
-       # commit to an existing gitolite-admin dir that 
+       # Unfortunately, gitolite setup will add a new
+       # commit to an existing gitolite-admin dir that
        # resets everything. We avoid this by renaming it first.
        if [ -d ./repositories/gitolite-admin.git ]; then
            mv ./repositories/gitolite-admin.git ./repositories/gitolite-admin.git-tmp
        fi
-      
+
        # First, setup gitolite without an ssh key.
        # My understanding is that this is essentially a noop,
-       # auth-wise. setup will still generate the .gitolite 
+       # auth-wise. setup will still generate the .gitolite
        # folder and .gitolite.rc files.
        echo "Initializing gitolite without a key"
        su git -c "bin/gitolite setup -a dummy"
