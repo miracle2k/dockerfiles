@@ -8,8 +8,6 @@ you provided, or you can bootstrap with an existing gitolite-admin repository.
 On subsequent starts, will run "gitolite setup" everytime to integrate any
 outside changes.
 
-The git user will have a ssh key generated for itself, for mirroring setups.
-
 ### Examples
 
 New installation:
@@ -32,11 +30,24 @@ have an existing gitolite-admin repository, you may skip this.
 
 These will be inserted into gitolite.rc.
 
+**TRUST_HOSTS**
+
+Hostnames (only a single one is supported currently) to add to known_hosts, i.e. *github.com*.
+
 ### Directories you could bind mount
 
 /home/git/repositories
   The actual git repositories will be stored here.
 
+### Mirroring
+
+If your gitolite install needs to mirror (that is, execute git push itself), the
+image can help you:
+
+* The git user will have a ssh key generated for itself. Access the public  key using
+  *docker cp CID:/home/git/.ssh/id_rsa.pub .*.
+
+* Use the *TRUST_HOSTS* environment variable to prepare the ./known_hosts file.
 
 ## Further customization
 

@@ -8,6 +8,14 @@ if [ ! -f ./.ssh/id_rsa ]; then
    su git -c "ssh-keygen -f /home/git/.ssh/id_rsa  -t rsa -N ''"
 fi
 
+# Support trusting hosts for mirroring setups.
+if [ ! -f ./.ssh/id_rsa ]; then
+    if [ -n "$TRUST_HOSTS" ]; then
+        echo "Generating known_hosts file with $TRUST_HOSTS"
+        su git -c "ssh-keyscan -H $TRUST_HOSTS > /home/git/.ssh/known_hosts"
+    fi
+fi
+
 if [ ! -d ./.gitolite ] ; then
    # if there is an existing repositories/ folder, it must
    # have been bind-mounted; we need to make sure it has the
