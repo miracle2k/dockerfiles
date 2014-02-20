@@ -11,7 +11,7 @@ if [ ! -f ./.ssh/id_rsa ]; then
 fi
 
 # Support trusting hosts for mirroring setups.
-if [ ! -f ./.ssh/id_rsa ]; then
+if [ ! -f ./.ssh/known_hosts ]; then
     if [ -n "$TRUST_HOSTS" ]; then
         echo "Generating known_hosts file with $TRUST_HOSTS"
         su git -c "ssh-keyscan -H $TRUST_HOSTS > /home/git/.ssh/known_hosts"
