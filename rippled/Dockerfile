@@ -1,9 +1,12 @@
 FROM ubuntu:12.04
 
+# hopefully temporary work-around of http://git.io/Ke_Meg#1724 
+RUN apt-mark hold initscripts udev plymouth mountall
+
 # Add package sources
+RUN apt-get -y update
 RUN apt-get -y install python-software-properties
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test
-RUN echo "deb http://archive.ubuntu.com/ubuntu precise universe" >> /etc/apt/sources.list
 
 
 RUN apt-get update
@@ -15,15 +18,15 @@ RUN apt-get -y install pkg-config
 RUN apt-get -y install git
 RUN apt-get -y install scons
 RUN apt-get -y install ctags
-RUN apt-get -y install libboost1.48-all-dev
+RUN add-apt-repository ppa:boost-latest/ppa && apt-get update && apt-get -y install libboost1.55-all-dev
 RUN apt-get -y install protobuf-compiler
 RUN apt-get -y install libprotobuf-dev
 RUN apt-get -y install libssl-dev
 
 # Upgrade to gcc-4.7 (after some other package pulls in gcc)
-RUN apt-get -y install gcc-4.7 g++-4.7
-RUN rm -f /usr/bin/gcc && ln -s /usr/bin/gcc-4.7 /usr/bin/gcc
-RUN rm -f /usr/bin/g++ && ln -s /usr/bin/g++-4.7 /usr/bin/g++
+RUN apt-get -y install gcc-4.8 g++-4.8
+RUN rm -f /usr/bin/gcc && ln -s /usr/bin/gcc-4.8 /usr/bin/gcc
+RUN rm -f /usr/bin/g++ && ln -s /usr/bin/g++-4.8 /usr/bin/g++
 
 
 # Checkout the ripple source
