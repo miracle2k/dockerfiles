@@ -19,8 +19,8 @@ RUN cd /ripple-rest && npm install
 ADD config.json /ripple-rest/config.json
 
 # Get going
-ADD run.sh /run.sh
-RUN chmod +x /run.sh
+ADD run.sh /run
+RUN chmod +x /run
 
 EXPOSE 5990
-ENTRYPOINT /run.sh
+CMD /run
