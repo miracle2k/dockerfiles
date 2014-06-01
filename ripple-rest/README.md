@@ -8,4 +8,7 @@ To run with a production database, specify the DATABASE_URL env variable:
 
 Services runs on port 5990.
 
+Note: If run in the foreground without -i, the output seems to halt after the first line,
+though "docker logs" will show you it works.
+
 TODO: Support custom config for rippled_servers, ssl_certs, host.
