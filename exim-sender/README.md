@@ -17,7 +17,7 @@ Environment variables:
 Example:
 --------
 
-    docker run -p 4444:25 -v /tmp/exim:/var/spool/exim4 -e PRIMARY_HOST=dpool.org -e ALLOWED_HOSTS="194.168.59.1/16" elsdoerfer/exim-sender
+    docker run -p 4444:25 -v /tmp/exim:/var/spool/exim4 -e PRIMARY_HOST=example.org -e ALLOWED_HOSTS="194.168.59.1/16" elsdoerfer/exim-sender
 
 
 Volumes you may want to share:
