@@ -39,6 +39,19 @@ EOF
 esac
 
 
+# Write HTTP settings
+ssl_val=false
+if [ "$USE_SSL" != "" ]; then
+    ssl_val=true
+fi
+cat > /hibiscus-server/cfg/de.willuhn.jameica.webadmin.Plugin.properties <<EOF
+listener.http.address=0.0.0.0
+listener.http.port=${PORT-8080}
+listener.http.auth=true
+listener.http.ssl=${ssl_val}
+EOF
+
+
 function initdb() {
     IFS=':' read -ra ADDR <<< "$DB_ADDR"
     DB_HOST=${ADDR[0]}

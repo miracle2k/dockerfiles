@@ -28,3 +28,11 @@ You may use PostgreSQL or MySQL instead by specifying some environment variables
 To initialize the database the first time, call ``initdb``:
 
     $ docker run -e DB_DRIVER=mysql ... run elsdoerfer/hibiscus-server initdb
+
+
+Other supported environment values
+----------------------------------
+
+**USE_SSL** (default: false): Serve via SSL.
+
+**PORT** (default: 8080): Port to provide service at.
