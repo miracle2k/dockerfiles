@@ -24,3 +24,7 @@ You may use PostgreSQL or MySQL instead by specifying some environment variables
 **DB_DRIVER**: ``postgres`` (default) or ``mysql``.
 
 **DB_ADDR**, **DB_NAME**, **DB_USERNAME**, **DB_PASSWORD**: Connection info.
+
+To initialize the database the first time, call ``initdb``:
+
+    $ docker run -e DB_DRIVER=mysql ... run elsdoerfer/hibiscus-server initdb

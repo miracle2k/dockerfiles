@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # See for instructions:
 # http://www.willuhn.de/products/hibiscus-server/install.php
 
@@ -37,5 +39,31 @@ EOF
 esac
 
 
+function initdb() {
+    IFS=':' read -ra ADDR <<< "$DB_ADDR"
+    DB_HOST=${ADDR[0]}
+    DB_PORT=${ADDR[1]}
+
+    case "$DB_DRIVER" in
+        postgres)
+            cmd="psql -h $DB_HOST -p $DB_PORT -U $DB_USERNAME  < /hibiscus-server/plugins/hibiscus/sql/postgresql-create.sql"
+            echo $cmd
+            eval PGPASSWORD=$DB_PASSWORD $cmd
+            ;;
+
+        mysql)
+            echo "initdb for driver mysql still needs to be added - go make a pull request"
+            ;;
+        *)
+            echo "Don't know how to initialize database for driver $DB_DRIVER"
+            ;;
+    esac
+}
+
+if [ "$*" == "initdb" ]; then
+        initdb
+        exit
+fi
+
 # Write configuration file based on desired database driver
-exec $*
+${@-/hibiscus-server/jameicaserver.sh -p $PASSWORD -f /srv/hibiscus}

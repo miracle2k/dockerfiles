@@ -5,6 +5,7 @@ FROM ubuntu
 
 RUN apt-get update && apt-get -y upgrade
 RUN apt-get -y install default-jre
+RUN apt-get -y install postgresql-client
 
 RUN apt-get -y install wget unzip
 RUN wget http://www.willuhn.de/products/hibiscus-server/releases/hibiscus-server-2.6.7.zip
@@ -14,4 +15,3 @@ ADD wrap.sh /wrap
 ENTRYPOINT ["/wrap"]
 
 EXPOSE 8080
-CMD /hibiscus-server/jameicaserver.sh -f /srv/hibiscus -p $PASSWORD 
