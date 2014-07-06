@@ -17,4 +17,4 @@ RUN unzip hibiscus-server-2.6.7.zip -d / && rm hibiscus-server-2.6.7.zip
 RUN rm /hibiscus-server/cfg/de.willuhn.jameica.hbci.rmi.HBCIDBService.properties
 
 EXPOSE 8080
-CMD /hibiscus-server/jameicaserver.sh -p $PASSWORD
+CMD /hibiscus-server/jameicaserver.sh -f /srv/hibiscus -p $PASSWORD 
