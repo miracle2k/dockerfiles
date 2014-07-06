@@ -4,8 +4,8 @@ RUN apt-get update && apt-get -y upgrade
 RUN apt-get -y install default-jre
 
 RUN apt-get -y install wget unzip
-RUN wget http://www.willuhn.de/products/hibiscus-server/releases/hibiscus-server-2.6.6.zip
-RUN unzip hibiscus-server-2.6.6.zip -d / && rm hibiscus-server-2.6.6.zip
+RUN wget http://www.willuhn.de/products/hibiscus-server/releases/hibiscus-server-2.6.7.zip
+RUN unzip hibiscus-server-2.6.7.zip -d / && rm hibiscus-server-2.6.7.zip
 
 # Follow:
 # http://www.willuhn.de/products/hibiscus-server/install.php
