@@ -13,6 +13,7 @@ PASSWORD is the password used to encrypt the database.
 
 The data directory is set to ``/srv/hibiscus``.
 
+*Note*: The server seems to be hanging for multiple minutes on the log message ``[INFO][de.willuhn.jameica.sensors.service.impl.SchedulerImpl$Worker.run] collected data from device: hibiscus.server: statistics`` before finally booting up the web interface (wee https://github.com/willuhn/hibiscus.server/issues/2).
 
 Database
 --------
