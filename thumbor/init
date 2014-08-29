@@ -1,0 +1,69 @@
+#!/bin/bash
+set -e
+
+usermod -d $APPDIR www-data
+mkdir -p $APPDIR/.ssh/
+if [ -e /etc/persistent-conf/ssh/id_rsa ]; then
+	cp -f /etc/persistent-conf/ssh/id_rsa $APPDIR/.ssh/id_rsa
+	chmod 600 $APPDIR/.ssh/id_rsa
+fi
+if [ -e /etc/persistent-conf/ssh/known_hosts ]; then
+	cp -f /etc/persistent-conf/ssh/known_hosts $APPDIR/.ssh/known_hosts
+fi
+chown -R www-data:www-data $APPDIR/.ssh
+chmod 700 $APPDIR/.ssh
+
+chown www-data:www-data $APPDIR/storage
+
+
+_start() {
+    if [ -S /dev/log ]; then
+        cat /setup/config/thumbor-syslog.conf >> /etc/thumbor.conf
+    fi
+
+    if [ -f /etc/persistent-conf/thumbor.conf ]; then
+        cat /etc/persistent-conf/thumbor.conf >> /etc/thumbor.conf
+    fi
+
+    echo "Starting thumbor..."
+
+    sudo -u www-data -H \
+        PYTHON_EGG_CACHE=/srv/thumbor/.egg-cache \
+        "$(which thumbor)"
+}
+
+
+_help () {
+    echo "Available options:"
+    echo " start          - Starts the thumbor server (default)"
+    echo " help           - Displays this help"
+    echo " [command]      - Execute a the specified shell command."
+}
+
+
+if [ -z "$1" ]; then
+    _start
+else
+    case "$1" in
+        start)
+            _start
+            ;;
+        help)
+            _help
+            ;;
+        *)
+            if [ -x $1 ]; then
+                $1
+            else
+                prog=$(which $1)
+                if [ -n "${prog}" ] ; then
+                    shift 1
+                    $prog $@
+                else
+                    echo "Not found: $1"
+                    exit 1
+                fi
+            fi
+            ;;
+    esac
+fi

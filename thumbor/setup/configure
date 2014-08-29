@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+#
+
+set -e
+
+
+cat /setup/config/thumbor.conf >> /etc/thumbor.conf
+cat /setup/config/thumbor-${THUMBOR_ENGINE}.conf >> /etc/thumbor.conf
+
+mkdir -p "${APPDIR}"
+chown www-data:www-data "${APPDIR}"
