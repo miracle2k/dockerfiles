@@ -16,7 +16,7 @@ chmod 700 $APPDIR/.ssh
 chown www-data:www-data $APPDIR/storage
 
 
-_start() {
+_init()  {
     if [ -S /dev/log ]; then
         cat /setup/config/thumbor-syslog.conf >> /etc/thumbor.conf
     fi
@@ -33,6 +33,7 @@ _start() {
 }
 
 
+_start() {
     echo "Starting thumbor..."
 
     sudo -u www-data -H \
@@ -47,6 +48,10 @@ _help () {
     echo " help           - Displays this help"
     echo " [command]      - Execute a the specified shell command."
 }
+
+
+
+_init
 
 
 if [ -z "$1" ]; then
