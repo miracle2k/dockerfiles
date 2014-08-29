@@ -27,6 +27,8 @@ _start() {
 
     echo "\n$CONFIG\n" >> /etc/thumbor.conf
 
+    echo "\nSECURITY_KEY=\"$SECURITY_KEY\"\nALLOW_UNSAFE_URL=False\n" >> /etc/thumbor.conf
+
     echo "Starting thumbor..."
 
     sudo -u www-data -H \
