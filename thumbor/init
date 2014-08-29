@@ -17,6 +17,18 @@ chown www-data:www-data $APPDIR/storage
 
 
 _init()  {
+    # At this point we add the runtime thumbor configuration to
+    # the thumbor.conf config file.
+    #
+    # If the container is started multiple times, append our init
+    # modifications to a fresh copy of the original config file.
+    if [ ! -f /etc/thumbor.conf.original ]; then
+        cp /etc/thumbor.conf /etc/thumbor.conf.original
+    else
+        cp /etc/thumbor.conf.original /etc/thumbor.conf
+    fi
+
+
     if [ -S /dev/log ]; then
         cat /setup/config/thumbor-syslog.conf >> /etc/thumbor.conf
     fi
