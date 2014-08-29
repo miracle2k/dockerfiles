@@ -1,3 +1,65 @@
-# docker-thumbor
+Docker Thumbor container
+========================
 
-Dockerfile to build a [Thumbor](https://github.com/thumbor/thumbor) container.
+Adapted from https://github.com/sprymix/docker-thumbor.
+
+
+Usage:
+------
+
+    $ docker run -p 80:8888 elsdoerfer/thumbor
+    $ wget http://dockerip:80/unsafe/300x0/smart/http://i.imgur.com/MwZwcOY.jpg
+
+
+Configuration
+-------------
+
+The container comes with a default configuration, that includes:
+
+- Using the graphicsmagick engine.
+- Using OpenCV feature/face detection (in non-lazy mode).
+- Using the filesystem storage, in ``/srv/thumbor/storage``.
+- Unsafe urls are enabled.
+
+You can find the full default configuration in the ``./config`` directory.
+
+To customize the configuration, you have two options:
+
+First, you can provide the file ``/etc/persistent-conf/thumbor.conf`` via
+mounting. The contents of this file will be appended to the default
+configuration.
+
+Second, you can provide the environment variable ``CONFIG``, which will
+be appended to the default configuration.
+
+
+Volumes
+-------
+
+/srv/thumbor/storage
+    In the default configuration, this is the image cache.
+
+/etc/persistent-conf
+    A place to mount in custom confuration.
+
+
+Environment variables
+---------------------
+
+CONFIG
+   Custom configuration; inserted directly into the Python-syntax
+   configuration file.
+
+SECURITY_KEY
+    Sets the security key and disallows **"unsafe"** urls.
+    This is applied after CONFIG.
+
+
+Note
+----
+
+This message:
+
+"libdc1394 error: Failed to initialize libdc1394"
+
+from OpenCV seems to be a warning only.
