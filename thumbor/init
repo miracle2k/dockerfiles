@@ -25,9 +25,13 @@ _start() {
         cat /etc/persistent-conf/thumbor.conf >> /etc/thumbor.conf
     fi
 
-    echo "\n$CONFIG\n" >> /etc/thumbor.conf
+    echo -e "\n$CONFIG\n" >> /etc/thumbor.conf
 
-    echo "\nSECURITY_KEY=\"$SECURITY_KEY\"\nALLOW_UNSAFE_URL=False\n" >> /etc/thumbor.conf
+    if [ -n "$SECURITY_KEY" ]; then
+        echo -e "\nSECURITY_KEY=\"$SECURITY_KEY\"\nALLOW_UNSAFE_URL=False\n" >> /etc/thumbor.conf
+    fi
+}
+
 
     echo "Starting thumbor..."
 
