@@ -25,6 +25,8 @@ _start() {
         cat /etc/persistent-conf/thumbor.conf >> /etc/thumbor.conf
     fi
 
+    echo "\n$CONFIG\n" >> /etc/thumbor.conf
+
     echo "Starting thumbor..."
 
     sudo -u www-data -H \
