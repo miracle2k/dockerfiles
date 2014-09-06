@@ -47,6 +47,10 @@ image can help you:
 * The git user will have a ssh key generated for itself. Access the public  key using
   *docker cp CID:/home/git/.ssh/id_rsa.pub .*.
 
+  Note that if you keep recreating the container, rather than restarting, a new key
+  will be generated. You can bind mount the **/home/git/.ssh** directory to
+  remedy this.
+
 * Use the *TRUST_HOSTS* environment variable to prepare the ./known_hosts file.
 
 ## Further customization

@@ -2,6 +2,11 @@
 
 cd /home/git
 
+# If .ssh has been mounted, ensure it has the right permissions
+if [ -d ./.ssh ]; then
+   chown -R git:git ./.ssh
+fi
+
 # Always make sure the git user has a private key you may
 # use for mirroring setups etc.
 if [ ! -f ./.ssh/id_rsa ]; then
