@@ -29,6 +29,8 @@ _install() {
 
     python setup.py install
 
+    pip install "raven<5"
+
     if [ -n "$afterhook" ]; then
         $afterhook
     fi

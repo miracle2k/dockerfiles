@@ -20,6 +20,8 @@ The container comes with a default configuration, that includes:
 - Using OpenCV feature/face detection (in non-lazy mode).
 - Using the filesystem storage, in ``/srv/thumbor/storage``.
 - Unsafe urls are enabled.
+- The Sentry **raven** package is installed, but Sentry-based error reporting
+   is not enabled by default, use the ``CONFIG`` option.
 
 You can find the full default configuration in the ``./config`` directory.
 
