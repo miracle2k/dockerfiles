@@ -25,6 +25,9 @@ RUN cd /home/git; su git -c "git clone git://github.com/sitaramc/gitolite";
 RUN cd /home/git/gitolite; su git -c "git checkout 8f1fd8481aaa338a02f5eb2f41dff4f8f1bc96f";
 RUN cd /home/git; su git -c "gitolite/install -ln";
 
+# https://github.com/docker/docker/issues/5892
+RUN chown -R git:git /home/git
+
 ADD ./init.sh /init
 RUN chmod +x /init
 ENTRYPOINT ["/init", "/usr/sbin/sshd", "-D"]
