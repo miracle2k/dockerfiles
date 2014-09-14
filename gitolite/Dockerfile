@@ -28,6 +28,9 @@ RUN cd /home/git; su git -c "gitolite/install -ln";
 # https://github.com/docker/docker/issues/5892
 RUN chown -R git:git /home/git
 
+# http://stackoverflow.com/questions/22547939/docker-gitlab-container-ssh-git-login-error
+RUN sed -i '/session    required     pam_loginuid.so/d' /etc/pam.d/sshd
+
 ADD ./init.sh /init
 RUN chmod +x /init
 ENTRYPOINT ["/init", "/usr/sbin/sshd", "-D"]
