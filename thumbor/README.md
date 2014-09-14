@@ -42,7 +42,7 @@ Volumes
     In the default configuration, this is the image cache.
 
 /etc/persistent-conf
-    A place to mount in custom confuration.
+    A place to mount in custom configuration.
 
 
 Environment variables
