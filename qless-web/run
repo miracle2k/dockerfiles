@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# --no-launch refers to the browser
+REDIS_URL="$REDIS_URL" qless-web --foreground --no-launch
