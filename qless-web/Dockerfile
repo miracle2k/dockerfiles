@@ -16,7 +16,7 @@ RUN apt-get -y install ruby1.9.1-dev
 # Installing from git on the server is a mess, so I simply prebuilt the gem,
 # using version 038a438f73d7af2c82541cdc0b1c5d12879a7bad and the command:
 # "gem build qless.gemspec".
-ADD qless-0.10.0.pre.gem /tmp/qless-0.10.0.pre.gem
+ADD http://sdutil.s3.amazonaws.com/qless-0.10.0.pre.gem /tmp/qless-0.10.0.pre.gem
 RUN gem install --no-ri --no-rdoc /tmp/qless-0.10.0.pre.gem
 
 # There are more dependencies that the current git version packaged here
