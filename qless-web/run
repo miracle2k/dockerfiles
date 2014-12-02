@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [[ -z "$REDIS_URL" ]] ;
+if [ -z "$REDIS_URL" ] ;
 then
     export REDIS_URL="redis://$REDIS_HOST"
 fi
