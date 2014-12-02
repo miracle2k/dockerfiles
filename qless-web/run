@@ -1,4 +1,9 @@
 #!/bin/sh
 
+if [[ -z "$REDIS_URL" ]] ;
+then
+    export REDIS_URL="redis://$REDIS_HOST"
+fi
+
 # --no-launch refers to the browser
 REDIS_URL="$REDIS_URL" qless-web --foreground --no-launch
