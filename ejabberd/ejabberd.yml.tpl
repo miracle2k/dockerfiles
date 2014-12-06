@@ -85,7 +85,7 @@ listen:
     ## file and uncomment this line:
     ##
     certfile: "/opt/ejabberd/ssl/xmpp_domain.pem"
-    starttls: true
+    starttls_required: true
     max_stanza_size: 65536
     shaper: c2s_shaper
     access: c2s
