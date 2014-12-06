@@ -47,6 +47,8 @@ To use your own certificates mount the volume `/opt/ejabberd/ssl` to a local dir
 
 Make sure that the certificate and private key are in one `.pem` file. If one file is missing it will be auto-generated. I.e. you can provide your certificate for your `XMMP_DOMAIN` and use a snakeoil certificate for the `SERVER_HOSTNAME`.
 
+You can also provide the certifiates via environment variables: `SSLCERT_HOST` and `SSLCERT_DOMAIN`.
+
 ## Using docker-ejabberd as base image
 
 The image is called `rroemhild/ejabberd` and is available on the Docker registry.

@@ -8,8 +8,8 @@ readonly CONFIGFILE="/opt/ejabberd/conf/ejabberd.yml"
 readonly CONFIGTEMPLATE="/opt/ejabberd/conf/ejabberd.yml.tpl"
 readonly CTLCONFIGFILE="/opt/ejabberd/conf/ejabberdctl.cfg"
 
-readonly SSLCERTHOST="/opt/ejabberd/ssl/host.pem"
-readonly SSLCERTDOMAIN="/opt/ejabberd/ssl/xmpp_domain.pem"
+readonly SSLCERT_HOST_FILE="/opt/ejabberd/ssl/host.pem"
+readonly SSLCERT_DOMAIN_FILE="/opt/ejabberd/ssl/xmpp_domain.pem"
 
 
 is_set() {
@@ -64,7 +64,7 @@ make_host_snakeoil_certificate() {
     echo -n "Missing ssl cert for your host. "
     echo "Generating snakeoil ssl cert for ${domain}..."
 
-    make_snakeoil_certificate ${domain} ${SSLCERTHOST}
+    make_snakeoil_certificate ${domain} ${SSLCERT_HOST_FILE}
 }
 
 
@@ -77,7 +77,13 @@ make_domain_snakeoil_certificate() {
     echo -n "Missing ssl cert for your xmpp domain. "
     echo "Generating snakeoil ssl cert for ${domain}..."
 
-    make_snakeoil_certificate ${domain} ${SSLCERTDOMAIN}
+    make_snakeoil_certificate ${domain} ${SSLCERT_DOMAIN_FILE}
+}
+
+write_file_from_env() {
+    echo "Writing $1 to $2"
+    mkdir -p "$(dirname $2)"
+    echo "${!1}" > $2
 }
 
 
@@ -118,12 +124,18 @@ is_set ${ERLANG_COOKIE} \
 
 ## ssl
 
+# read certs from env?
+is_set ${SSLCERT_DOMAIN} \
+  && write_file_from_env "SSLCERT_DOMAIN" ${SSLCERT_DOMAIN_FILE}
+is_set ${SSLCERT_HOST} \
+  && write_file_from_env "SSLCERT_HOST" ${SSLCERT_HOST_FILE}
+
 # generate host ssl cert if missing
-file_exist ${SSLCERT_DOMAIN} \
+file_exist ${SSLCERT_DOMAIN_FILE} \
   || make_host_snakeoil_certificate
 
 # generate xmmp domain ssl cert if missing
-file_exist ${SSLCERT_HOST} \
+file_exist ${SSLCERT_HOST_FILE} \
   || make_domain_snakeoil_certificate
 
 
