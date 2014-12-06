@@ -452,7 +452,7 @@ access:
   ## In-band registration allows registration of any possible username.
   ## To disable in-band registration, replace 'allow' with 'deny'.
   register:
-    all: allow
+    all: deny
   ## Only allow to register from localhost
   trusted_network:
     loopback: allow
