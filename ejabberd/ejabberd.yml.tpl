@@ -184,7 +184,6 @@ s2s_certfile: "/opt/ejabberd/ssl/host.pem"
 ##
 auth_method:
   - internal
-  - anonymous
 
 ##
 ## Store the plain passwords or hashed for SCRAM:
@@ -252,9 +251,9 @@ auth_method:
 ##   anonymous_protocol: sasl_anon | login_anon | both
 ##   allow_multiple_connections: true | false
 
-Anonymous login support:
-  anonymous_protocol: both
-  allow_multiple_connections: true
+#Anonymous login support:
+#  anonymous_protocol: both
+#  allow_multiple_connections: true
 
 ##
 ## host_config:
