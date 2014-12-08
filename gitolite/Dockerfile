@@ -33,6 +33,6 @@ RUN sed -i '/session    required     pam_loginuid.so/d' /etc/pam.d/sshd
 
 ADD ./init.sh /init
 RUN chmod +x /init
-ENTRYPOINT ["/init", "/usr/sbin/sshd", "-D"]
+CMD ["/init", "/usr/sbin/sshd", "-D"]
 
 EXPOSE 22
