@@ -29,6 +29,13 @@ RUN gem install --no-ri --no-rdoc vegas -v "~>0.1.1"
 # It's probably like gunicorn.
 RUN gem install thin --no-ri --no-rdoc
 
+# Make sure we run on UTF8. The qless web interface will run into encoding
+# trouble otherwise; without this the system locale is POSIX, and Ruby 
+# by default tries to read US-ASCII when calling things like JSON.parse.
+RUN locale-gen en_US.UTF-8  
+ENV LANG en_US.UTF-8  
+ENV LANGUAGE en_US:en  
+ENV LC_ALL en_US.UTF-8 
 
 # HTTP
 EXPOSE 5678
