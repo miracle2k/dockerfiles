@@ -5,10 +5,35 @@ This is a [Docker](http://www.docker.io/) cookbook for deploying the
 [Sentry](https://pypi.python.org/pypi/sentry) realtime event logging and
 aggregation platform.
 
+
+Michael's setup notes
+=====================
+
+- The initial syncdb attempt probably fails due to some weird tty.
+- Run again to complete.
+- Then run with command "createsupseruser".
+
+To setup the database, run the postgres server template with a shell to
+access to client tool, and then do:
+
+    CREATE USER sentry CREATEROLE NOSUPERUSER ENCRYPTED PASSWORD 'ahvo5EiyLi0Ri4vu';
+    CREATE DATABASE sentry WITH OWNER sentry ENCODING = 'UTF-8';
+
+I initially configured in pg_hba.conf:
+
+    host all all 172.17.42.1/16   trust
+
+and then later switched it to:
+
+    host all all 172.17.42.1/16 md5
+
+"ip addr show" will give you the netmask of the docker0 bridge.
+
+
 Authorship History
 ------------------
 
-Forked from crosbymichael/docker-cookbooks, this is a continuation of his work.
+Forked from grue/docker-sentry, which was forked from crosbymichael/docker-cookbooks.
 
 Environment Variables
 ---------------------
