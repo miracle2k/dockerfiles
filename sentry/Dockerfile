@@ -1,6 +1,5 @@
 FROM ubuntu
 
-RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
 RUN apt-get update
 RUN apt-get upgrade -y
 
@@ -13,20 +12,19 @@ RUN locale-gen en_US.UTF-8
 RUN dpkg-reconfigure locales
 
 RUN apt-get install -y openssh-server git-core libxml2-dev curl python build-essential make gcc python-dev wget
-RUN apt-get install -y postgresql-client-9.1 postgresql-client-common libpq5
+RUN apt-get install -y postgresql-client postgresql-client-common libpq5
 RUN apt-get install -y libpq-dev
 RUN apt-get install -y mysql-client
 RUN apt-get install -y libmysqlclient-dev
-
-RUN wget http://python-distribute.org/distribute_setup.py
-RUN python distribute_setup.py
+RUN apt-get install -y python-distribute
+RUN apt-get install -y libxml2-dev libxslt1-dev python-dev
 
 RUN wget https://raw.github.com/pypa/pip/master/contrib/get-pip.py
 RUN python get-pip.py
 
 RUN pip install psycopg2
-RUN pip install sentry
 RUN pip install MySQL-python
+RUN pip install sentry==7.1.1
 
 EXPOSE 9000
 
