@@ -139,11 +139,11 @@ is_set ${SSLCERT_HOST} \
   && write_file_from_env "SSLCERT_HOST" ${SSLCERT_HOST_FILE}
 
 # generate host ssl cert if missing
-file_exist ${SSLCERT_DOMAIN_FILE} \
+file_exist ${SSLCERT_HOST_FILE} \
   || make_host_snakeoil_certificate
 
 # generate xmmp domain ssl cert if missing
-file_exist ${SSLCERT_HOST_FILE} \
+file_exist ${SSLCERT_DOMAIN_FILE} \
   || make_domain_snakeoil_certificate
 
 
