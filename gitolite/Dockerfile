@@ -32,6 +32,10 @@ RUN chown -R git:git /home/git
 RUN sed -i '/session    required     pam_loginuid.so/d' /etc/pam.d/sshd
 
 ADD ./init.sh /init
+
+# Addind volume to repositories directory
+VOLUME /home/git/repositories
+
 RUN chmod +x /init
 ENTRYPOINT ["/init", "/usr/sbin/sshd", "-D"]
 
