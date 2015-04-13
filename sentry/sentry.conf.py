@@ -3,6 +3,7 @@
 # you can inherit and tweak settings to your hearts content.
 from sentry.conf.server import *
 
+import base64
 import os.path
 
 CONF_ROOT = os.path.dirname(__file__)
@@ -13,6 +14,9 @@ database_user = os.environ.get('SENTRY_USER', 'sentry')
 database_password = os.environ.get('SENTRY_PASS', 'sentry')
 database_host = os.environ.get('SENTRY_HOST', '127.0.0.1')
 database_port = os.environ.get('SENTRY_PORT', '')
+
+redis_host = os.environ.get('REDIS_HOST', '')
+redis_port = os.environ.get('REDIS_PORT', 6379)
 
 
 DATABASES = {
@@ -43,8 +47,8 @@ SENTRY_USE_BIG_INTS = False if os.environ.get('NO_BIG_INTS', False) else True
 SENTRY_REDIS_OPTIONS = {
     'hosts': {
         0: {
-            'host': '127.0.0.1',
-            'port': 6379,
+            'host': redis_host,
+            'port': redis_port,
         }
     }
 }
@@ -78,7 +82,7 @@ SENTRY_CACHE = 'sentry.cache.redis.RedisCache'
 # on a Python framework called Celery to manage queues.
 
 CELERY_ALWAYS_EAGER = False
-BROKER_URL = 'redis://localhost:6379'
+BROKER_URL = 'redis://{}:{}'.format(redis_host, redis_port)
 
 #################
 ## Rate Limits ##

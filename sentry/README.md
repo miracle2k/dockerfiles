@@ -1,46 +1,48 @@
 docker-sentry
 ================
 
-This is a [Docker](http://www.docker.io/) cookbook for deploying the 
-[Sentry](https://pypi.python.org/pypi/sentry) realtime event logging and
-aggregation platform.
+A [Docker](http://www.docker.io/) image for deploying
+[Sentry 7.x](https://pypi.python.org/pypi/sentry).
+
+Forked from grue/docker-sentry, which was forked from
+crosbymichael/docker-cookbooks.
 
 
-Michael's setup notes
-=====================
+Setup
+=====
 
-- The initial syncdb attempt probably fails due to some weird tty.
-- Run again to complete.
-- Then run with command "createsupseruser".
+You need to run separately (not included in the image):
 
-To setup the database, run the postgres server template with a shell to
-access to client tool, and then do:
+- A PostgreSQL database.
+- A Redis server.
 
-    CREATE USER sentry CREATEROLE NOSUPERUSER ENCRYPTED PASSWORD 'ahvo5EiyLi0Ri4vu';
-    CREATE DATABASE sentry WITH OWNER sentry ENCODING = 'UTF-8';
+Further, this image includes both the Sentry server and the Sentry
+queue worker, so you need to run two instances of it. At the end,
+you might end up with four containers.
 
-I initially configured in pg_hba.conf:
+1. Use the environmentment variables below to provide the connection
+details for the database and redis.
 
-    host all all 172.17.42.1/16   trust
+2. Let sentry create the database with: ``docker run sentry upgrade``
 
-and then later switched it to:
+3. Create a sentry user with command ``docker run -it sentry createsuperuser``
 
-    host all all 172.17.42.1/16 md5
-
-"ip addr show" will give you the netmask of the docker0 bridge.
+4. Run sentry and the worker. ``docker run sentry celery worker -B``
 
 
-Authorship History
-------------------
 
-Forked from grue/docker-sentry, which was forked from crosbymichael/docker-cookbooks.
+Upgrade from a previous version
+-------------------------------
+
+    $ docker run sentry sentry upgrade
+
 
 Environment Variables
 ---------------------
 
 ### General settings
+* SENTRY_URL_PREFIX - Absolute URI to sentry. This MUST be set.
 * SENTRY_KEY    - Django secret key, if omitted it will generate a random one on launch
-* SENTRY_URL_PREFIX - Absolute URI to sentry. It will attempt to guess if not set
 
 ### DB settings
 * SENTRY_NAME   - Sentry db name
@@ -49,6 +51,10 @@ Environment Variables
 * SENTRY_HOST   - Sentry db host
 * SENTRY_PORT   - Sentry db port
 * SENTRY_ENGINE - Django db backend, defaults to sqlite
+
+### Redis settings
+* REDIS_HOST
+* REDIS_PORT
 
 ### Email settings
 * SENTRY_EMAIL_FROM     - Address to send mail as

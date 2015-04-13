@@ -18,18 +18,18 @@ RUN apt-get install -y mysql-client
 RUN apt-get install -y libmysqlclient-dev
 RUN apt-get install -y python-distribute
 RUN apt-get install -y libxml2-dev libxslt1-dev python-dev
+RUN apt-get install -y libffi-dev
 
 RUN wget https://raw.github.com/pypa/pip/master/contrib/get-pip.py
 RUN python get-pip.py
 
 RUN pip install psycopg2
 RUN pip install MySQL-python
-RUN pip install sentry==7.1.1
+RUN pip install sentry==7.4.3
 
 EXPOSE 9000
 
 ADD sentry.conf.py /sentry.conf.py
-ADD admin_user.json /initial_data.json
 
 ENTRYPOINT ["/usr/local/bin/sentry", "--config=/sentry.conf.py"]
 
