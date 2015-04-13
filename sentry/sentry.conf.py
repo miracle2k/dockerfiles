@@ -182,6 +182,8 @@ SENTRY_ALLOW_REGISTRATION = False
 # Changing this value will result in all current sessions being invalidated
 SENTRY_KEY = os.environ.get('SENTRY_KEY', base64.urlsafe_b64encode(os.urandom(50)))
 
+# CORS
+SENTRY_ALLOW_ORIGIN = os.environ.get('SENTRY_ALLOW_ORIGIN', '')
 
 # http://twitter.com/apps/new
 # It's important that input a callback URL, even if its useless. We have no idea why, consult Twitter.
