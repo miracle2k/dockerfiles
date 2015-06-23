@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 path=/etc/exim4
 
@@ -11,7 +11,25 @@ chown Debian-exim /var/spool/exim4
 
 # Sort of hack to send logs to stdout
 xtail /var/log/exim4 &
-# Note: Using exec here means Ctrl-C via an attached docker client no
-# longer works - it sends the key strokes to the non-existant shell
-# process, I assume.
-/usr/sbin/exim4 ${*:--bdf -q30m}
+XTAIL_PID=$!
+
+# Start exim
+/usr/sbin/exim4 ${*:--bdf -q30m} &
+EXIM_PID=$!
+
+# Add a signal trap to clean up the child processs
+clean_up() {
+    echo "killing exim ($EXIM_PID)"
+    kill $EXIM_PID
+}
+trap clean_up SIGHUP SIGINT SIGTERM
+
+# Wait for the exim process to exit
+wait $EXIM_PID
+EXIT_STATUS=$?
+
+# Kill the xtail process
+echo "killing xtail ($XTAIL_PID)"
+kill $XTAIL_PID
+
+exit $EXIT_STATUS
