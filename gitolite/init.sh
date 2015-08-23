@@ -1,5 +1,13 @@
 #!/bin/sh
 
+
+if [ ! -e /etc/ssh/ssh_host_rsa_key ]; then
+  echo "No SSH host key available. Generating one..."
+  export LC_ALL=C
+  export DEBIAN_FRONTEND=noninteractive
+  dpkg-reconfigure openssh-server
+fi
+
 cd /home/git
 
 # If .ssh has been mounted, ensure it has the right permissions

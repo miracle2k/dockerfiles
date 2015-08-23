@@ -34,10 +34,15 @@ These will be inserted into gitolite.rc.
 
 Hostnames (only a single one is supported currently) to add to known_hosts, i.e. *github.com*.
 
-### Directories you could bind mount
+### Directories you could bind mount (or use --volumes-from)
 
 /home/git/repositories
   The actual git repositories will be stored here.
+
+/etc/ssh
+  The SSH host keys are stored here; they are generated when the container starts,
+  and if you don't maintain them across containers, your clients will see warnings
+  that they changed.
 
 ### Mirroring
 
