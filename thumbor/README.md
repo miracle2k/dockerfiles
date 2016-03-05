@@ -3,6 +3,8 @@ Docker Thumbor container
 
 Adapted from https://github.com/sprymix/docker-thumbor.
 
+sicle engine, gifs
+
 
 Usage:
 ------
@@ -16,7 +18,6 @@ Configuration
 
 The container comes with a default configuration, that includes:
 
-- Using the graphicsmagick engine.
 - Using OpenCV feature/face detection (in non-lazy mode).
 - Using the filesystem storage, in ``/srv/thumbor/storage``.
 - Unsafe urls are enabled.

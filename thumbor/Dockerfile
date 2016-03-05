@@ -1,38 +1,55 @@
 FROM ubuntu:14.04
-MAINTAINER elprans@sprymix.com
+MAINTAINER michael@elsdoerfer.com
 
 ENV APPDIR /srv/thumbor
-ENV THUMBOR_VERSION 4.4.1
-ENV THUMBOR_ENGINE graphicsmagick
-ENV GRAPHICSMAGICK_ENGINE_VERSION 0.1.1
+ENV THUMBOR_VERSION 6.0.0b4
 
 EXPOSE 8888
 
 VOLUME ["/etc/persistent-conf"]
 VOLUME ["/srv/thumbor/storage"]
-VOLUME ["/dev/log"]
 
 ENTRYPOINT ["/init"]
 CMD ["start"]
 
 RUN DEBIAN_FRONTEND=noninteractive \
-        apt-get update && apt-get install --no-install-recommends -y \
-            language-pack-en-base
-
+    apt-get update && apt-get install --no-install-recommends -y language-pack-en-base
 ENV LANG en_US.UTF-8
 
+# The deps defined in thumbor/requirements
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
-                patch wget unzip python-dev python-pip \
-        && apt-get clean
+	libcurl4-openssl-dev \
+	python-numpy \
+	python-opencv \
+	libopencv-dev \
+	libjpeg-dev \
+	libpng-dev \
+	libx264-dev \
+	libass-dev \
+	libvpx1 \
+	libvpx-dev \
+	libwebp-dev \
+	webp \
+	gifsicle \
+	memcached \
+	libmemcache-dev \
+	libmemcached-dev \
+	python-scipy \
+	python-pyexiv2 \
+	cython
 
-RUN mkdir -p /setup
+# A bunch of dependencies of our particular deployment (some from the original forked version)
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+	libpngwriter libfaac libtiffxx0c2 libavcodec53 libavformat53 gstreamer0.10-ffmpeg libtiff4 redis-server
 
-ADD setup /setup
+# thumbor needs python-dev for pip install
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    wget unzip python-dev python-pip && apt-get clean
+
+ADD setup.sh /setup
+ADD thumbor.conf /thumbor.conf
+
 RUN DEBIAN_FRONTEND=noninteractive \
-        /setup/install
-
-ADD config /setup/config
-RUN DEBIAN_FRONTEND=noninteractive \
-        /setup/configure
+        /setup
 
 ADD init /init
