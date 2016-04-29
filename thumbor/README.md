@@ -1,9 +1,9 @@
 Docker Thumbor container
 ========================
 
-Adapted from https://github.com/sprymix/docker-thumbor.
+NOTE: THis is currently broken, I am using https://github.com/APSL/docker-thumbor for now.
 
-sicle engine, gifs
+Adapted from https://github.com/sprymix/docker-thumbor.
 
 
 Usage:
