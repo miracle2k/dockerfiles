@@ -1,4 +1,4 @@
-FROM ubuntu:12.04
+FROM ubuntu:16.04
 
 RUN apt-get update
 RUN apt-get -y upgrade
@@ -8,16 +8,11 @@ RUN apt-get -y upgrade
 RUN apt-get -y install build-essential
 
 # Install ruby and rubygems
-RUN apt-get -y install rubygems1.9.1
+RUN apt-get -y install rubygems
 # Again, ruby dev libs required to build EventMachine.
-RUN apt-get -y install ruby1.9.1-dev
+RUN apt-get -y install ruby-dev
 
-# We need the git version of qless, since the released one is old and broken.
-# Installing from git on the server is a mess, so I simply prebuilt the gem,
-# using version 038a438f73d7af2c82541cdc0b1c5d12879a7bad and the command:
-# "gem build qless.gemspec".
-ADD http://sdutil.s3.amazonaws.com/qless-0.10.0.pre.gem /tmp/qless-0.10.0.pre.gem
-RUN gem install --no-ri --no-rdoc /tmp/qless-0.10.0.pre.gem
+RUN gem install --no-ri --no-rdoc qless -v 0.10.2
 
 # There are more dependencies that the current git version packaged here
 # does not seem to properly declare, see:
