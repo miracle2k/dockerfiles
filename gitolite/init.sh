@@ -5,7 +5,7 @@
 # files, we just check that one of them exists.
 if [ ! -e /etc/ssh/ssh_host_rsa_key ]; then
   # See if host keys have been defined in the repositories volume
-  HOSTKEY_DIR = "/home/git/repositories/.ssh/host-keys"
+  HOSTKEY_DIR="/home/git/repositories/.ssh/host-keys"
   if [ -e "$HOSTKEY_DIR/ssh_host_rsa_key" ]; then
     echo "Using host key from $HOSTKEY_DIR"
     cp $HOSTKEY_DIR/* /etc/ssh/
@@ -25,14 +25,14 @@ if [ -d ./.ssh ]; then
    chown -R git:git ./.ssh
 
 else
-  CLIENT_DIR = "/home/git/repositories/.ssh/client"
+  CLIENT_DIR="/home/git/repositories/.ssh/client"
   # .ssh does not exist; As an alternative, we allow the .ssh/client
   # folder from the repositories volume to be copied.
   if [ -d "$CLIENT_DIR" ]; then
     echo "Copying files from $CLIENT_DIR to /home/git/.ssh"
     cp -pr $CLIENT_DIR ./.ssh
     chown -R git:git ./.ssh
-  else:
+  fi
 fi
 
 # Always make sure the git user has a private key you may
