@@ -108,5 +108,11 @@ else
     su git -c "bin/gitolite setup"
 fi
 
+
+# Allow to specificy "sshd" as a command.
+if [ "${1}" = 'sshd' ]; then
+  set -- /usr/sbin/sshd -D
+fi
+
 echo "Executing $*"
 exec $*
