@@ -36,29 +36,53 @@ Hostnames (only a single one is supported currently) to add to known_hosts, i.e.
 
 ### Directories you could bind mount (or use --volumes-from)
 
-/home/git/repositories
-  The actual git repositories will be stored here.
+`/home/git/repositories` - The actual git repositories will be stored here.
 
-/etc/ssh
-  The SSH host keys are stored here; they are generated when the container starts,
+`/etc/ssh` - The SSH host keys are stored here; they are generated when the container starts,
   and if you don't maintain them across containers, your clients will see warnings
   that they changed.
+
+
+### SSH host key
+
+The container needs a host key that is personal to your installation. This
+host key authenticates the server to clients.
+
+The first time the container starts, a host key will be generated. This won't
+work well if your container is recreated often; because when the host key
+changes, your git clients will show warnings and refuse to work.
+
+To fix this, you have a couple of options:
+
+1) You can make `/etc/ssh` a volume; the host key is stored there.
+
+2) You can make sure a directory `/home/git/repositories/.ssh/host-keys`
+   exists and contains the host keys. If that is the case, they will be used.
+   You may want to prefer this over (1) because you only need a single volume.
+
+3) TODO: Allow specifying the host keys via an env var.
+
 
 ### Mirroring
 
 If your gitolite install needs to mirror (that is, execute git push itself), the
 image can help you:
 
-* The git user will have a ssh key generated for itself. Access the public  key using
-  *docker cp CID:/home/git/.ssh/id_rsa.pub .*.
+* The git user will have a ssh key generated for itself. Access the public key
+  using `docker cp CID:/home/git/.ssh/id_rsa.pub .`.
 
-  Note that if you keep recreating the container, rather than restarting, a new key
-  will be generated. You can bind mount the **/home/git/.ssh** directory to
-  remedy this.
+  Note that if you keep recreating the container, rather than restarting, a new
+  key will be generated. To prevent this, you can mount the  `/home/git/.ssh`
+  directory. Alternatively, if the folder `/home/git/repositories/.ssh/client`
+  exists, the files in that folder will be used (copied to `/home/git/.ssh`).
+  You may want to prefer this over a separate volume for the ssh files.
 
-* Use the *TRUST_HOSTS* environment variable to prepare the ./known_hosts file.
+* Use the `TRUST_HOSTS` environment variable to prepare the
+  `.ssh/known_hosts` file. If given, `known_hosts` will be completely overridden
+  on container start.
 
-## Further customization
+
+### Further customization
 
 If you need to use things like custom hooks, you have different options:
 
