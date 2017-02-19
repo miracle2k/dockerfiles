@@ -97,6 +97,11 @@ if [ ! -d ./.gitolite ] ; then
            sed -i "s|# LOCAL_CODE.*=>.*$|LOCAL_CODE => \"${LOCAL_CODE}\",|" $rcfile
        fi
 
+       # Create log directory to prevent cli spew
+       su git -c "mkdir -p .gitolite/logs"
+       # Setup hooks for following post-update hook call
+       su git -c "bin/gitolite setup --hooks-only"
+
        # We will need to update authorized_keys based on
        # the gitolite-admin repo. The way to do this is by
        # triggering the post-update hook of the gitolite-admin
