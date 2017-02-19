@@ -9,7 +9,7 @@ if [ ! -e /etc/ssh/ssh_host_rsa_key ]; then
   if [ -e "$HOSTKEY_DIR/ssh_host_rsa_key" ]; then
     echo "Using host key from $HOSTKEY_DIR"
     cp $HOSTKEY_DIR/* /etc/ssh/
-  else:
+  else
     echo "No SSH host keys available. Generating..."
     export LC_ALL=C
     export DEBIAN_FRONTEND=noninteractive
