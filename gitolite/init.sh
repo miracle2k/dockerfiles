@@ -9,7 +9,7 @@ if [ ! -e /etc/ssh/ssh_host_rsa_key ]; then
   if [ -e "$HOSTKEY_DIR/ssh_host_rsa_key" ]; then
     echo "Using host key from $HOSTKEY_DIR"
     cp $HOSTKEY_DIR/* /etc/ssh/
-  else:
+  else
     echo "No SSH host keys available. Generating..."
     export LC_ALL=C
     export DEBIAN_FRONTEND=noninteractive
@@ -96,6 +96,11 @@ if [ ! -d ./.gitolite ] ; then
        if [ -n "$LOCAL_CODE" ]; then
            sed -i "s|# LOCAL_CODE.*=>.*$|LOCAL_CODE => \"${LOCAL_CODE}\",|" $rcfile
        fi
+
+       # Create log directory to prevent cli spew
+       su git -c "mkdir -p .gitolite/logs"
+       # Setup hooks for following post-update hook call
+       su git -c "bin/gitolite setup --hooks-only"
 
        # We will need to update authorized_keys based on
        # the gitolite-admin repo. The way to do this is by
