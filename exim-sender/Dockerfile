@@ -1,8 +1,11 @@
-FROM ubuntu:14.04
+FROM ubuntu:20.04
 
-RUN apt-get update && sudo apt-get -y upgrade
-RUN apt-get install -y exim4
-RUN apt-get install -y xtail
+RUN DEBIAN_FRONTEND='noninteractive' apt-get update && \
+                                     apt-get install -y apt-utils && \
+                                     apt-get -y upgrade
+
+RUN DEBIAN_FRONTEND='noninteractive' apt-get install -y exim4
+RUN DEBIAN_FRONTEND='noninteractive' apt-get install -y xtail
 
 # We control the config outselves entirely
 RUN rm -rf /etc/exim4 && mkdir -p /etc/exim4
